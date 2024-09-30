@@ -15,6 +15,7 @@ public class TemperatureSeriesAnalysis {
     private int tempseries_length = 0;
     public TemperatureSeriesAnalysis() {
         this.tempseries = new double[100];
+        System.out.println("HI there!!");
     }
 
 

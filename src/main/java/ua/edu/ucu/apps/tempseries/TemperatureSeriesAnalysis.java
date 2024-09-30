@@ -11,37 +11,38 @@ import lombok.Setter;
 public class TemperatureSeriesAnalysis {
 
     private double[] tempseries;
-    private int tempseries_actual_value = 0;
-    private int tempseries_length = 0;
+    private int tempseriesActualValue = 0;
+    private int tempseriesLength = 0;
+    public static final int AHUNDRED =100;
     public TemperatureSeriesAnalysis() {
-        this.tempseries = new double[100];
+        this.tempseries = new double[AHUNDRED];
         System.out.println("HI there!!");
     }
 
 
-    public double[] GetTempseries(){
+    public double[] getTempseries() { 
         return this.tempseries;
     }
 
-    private void increase_capacity(int new_capacity){
-        double[] copy = new double[new_capacity];
-        System.arraycopy(this.tempseries, 0, copy, 0, tempseries_length);
+    private void increaseCapacity(int newCapacity) { 
+        double[] copy = new double[newCapacity];
+        System.arraycopy(this.tempseries, 0, copy, 0, tempseriesLength);
         tempseries = copy;
-        tempseries_length = new_capacity;
+        tempseriesLength = newCapacity;
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         this.tempseries = temperatureSeries;
-        tempseries_actual_value += temperatureSeries.length;
-        tempseries_length = temperatureSeries.length;
+        tempseriesActualValue += temperatureSeries.length;
+        tempseriesLength = temperatureSeries.length;
     }
 
     public double average() {
-        if(ArrayUtils.isEmpty(this.tempseries)){
+        if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
         double average = 0.0;
-        for(double element : this.tempseries){
+        for (double element : this.tempseries) {
             average += element;
         }
         return average / this.tempseries.length;
@@ -50,20 +51,20 @@ public class TemperatureSeriesAnalysis {
     public double deviation() {
         double mean = this.average();
         double variance = 0.0;
-        for(double element : this.tempseries){
-            variance += Math.pow((element - mean), 2);
+        for (double element : this.tempseries) {
+            variance += (element - mean) * (element - mean);
         }
         variance = variance / this.tempseries.length;
         return Math.sqrt(variance);
     }
 
     public double min() {
-        if(ArrayUtils.isEmpty(this.tempseries)){
+        if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
         double min = Double.MAX_VALUE;
-        for(double element : this.tempseries){
-            if(element < min){
+        for (double element : this.tempseries) {
+            if (element < min) {
                 min = element;
             }
         }
@@ -71,12 +72,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        if(ArrayUtils.isEmpty(this.tempseries)){
+        if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
         double max = Double.MIN_VALUE;
-        for(double element : this.tempseries){
-            if(element > max){
+        for (double element : this.tempseries) {
+            if (element > max) {
                 max = element;
             }
         }
@@ -84,15 +85,15 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToZero() {
-        if(ArrayUtils.isEmpty(this.tempseries)){
+        if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
         double closest_to_zero = Double.MAX_VALUE;
-        for(double element : this.tempseries){
-            if(Math.abs(closest_to_zero) == element){
+        for (double element : this.tempseries) {
+            if (Math.abs(closest_to_zero) == element) {
                 closest_to_zero = Math.abs(element);
             }
-            if(Math.abs(element) < Math.abs(closest_to_zero)){
+            if (Math.abs(element) < Math.abs(closest_to_zero)) {
                 closest_to_zero = element;
             }
         }
@@ -100,15 +101,15 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToValue(double tempValue) {
-        if(ArrayUtils.isEmpty(this.tempseries)){
+        if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
         double closest_to_element = Double.MAX_VALUE;
-        for(double element : this.tempseries){
-            if((Math.abs(tempValue - closest_to_element)) > Math.abs(tempValue - element)){
+        for (double element : this.tempseries) {
+            if ((Math.abs(tempValue - closest_to_element)) > Math.abs(tempValue - element)) {
                 closest_to_element = element;
             }
-            else if((Math.abs(tempValue - closest_to_element)) == Math.abs(tempValue - element)){
+            else if ((Math.abs(tempValue - closest_to_element)) == Math.abs(tempValue - element)) {
                 closest_to_element = Math.max(tempValue, closest_to_element);
             }
         }
@@ -118,8 +119,8 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsLessThen(double tempValue) {
         double[] output = new double[tempseries.length];
         int current = 0;
-        for(double element : this.tempseries){
-            if(tempValue > element){
+        for (double element : this.tempseries) {
+            if (tempValue > element) {
                 output[current] = element;
                 current++;
             }
@@ -132,8 +133,8 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsGreaterThen(double tempValue) {
         double[] output = new double[tempseries.length];
         int current = 0;
-        for(double element : this.tempseries){
-            if(tempValue < element){
+        for (double element : this.tempseries) {
+            if (tempValue < element) {
                 output[current] = element;
                 current++;
             }
@@ -146,8 +147,8 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsInRange(double lowerBound, double upperBound) {
         double[] output = new double[tempseries.length];
         int current = 0;
-        for(double element : this.tempseries){
-            if(lowerBound <= element && upperBound >= element){
+        for (double element : this.tempseries) {
+            if (lowerBound <= element && upperBound >= element) {
                 output[current] = element;
                 current++;
             } 
@@ -159,7 +160,7 @@ public class TemperatureSeriesAnalysis {
 
     public void reset() {
         double[] java_fignua = new double[0];
-        this.tempseries_length = 0;
+        this.tempseriesLength = 0;
         this.tempseries = java_fignua ;
     }
 
@@ -174,21 +175,21 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        int current_index = tempseries_actual_value;
+        int current_index = tempseriesActualValue;
 
-        for(double el : temps){
-            if(el < -273){
+        for (double el : temps) {
+            if (el < -273) {
                 throw new InputMismatchException();
             }
         }
 
-        for(double temp : temps){
-            if (current_index == this.tempseries_length){
-                increase_capacity(this.tempseries_length * 2);
+        for (double temp : temps) {
+            if (current_index == this.tempseriesLength) {
+                increaseCapacity(this.tempseriesLength * 2);
             }
             this.tempseries[current_index] = temp;
             current_index++;
-            tempseries_actual_value++;
+            tempseriesActualValue++;
 
         }
 

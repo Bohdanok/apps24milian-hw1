@@ -20,7 +20,8 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        this.tempseries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
+        this.tempseries = Arrays.copyOf(temperatureSeries, 
+        temperatureSeries.length);
         tempseriesActualValue += temperatureSeries.length;
         tempseriesLength = temperatureSeries.length;
     }

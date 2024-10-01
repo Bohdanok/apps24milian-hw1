@@ -4,20 +4,24 @@ import java.util.InputMismatchException;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class TemperatureSeriesAnalysis {
 
     private double[] tempseries;
     private int tempseriesActualValue = 0;
     private int tempseriesLength = 0;
-    public static final int AHUNDRED =100;
+    public final int AHUNDRED = 100;
+    public final int TONEGATIVE = -273;
+
     public TemperatureSeriesAnalysis() {
         this.tempseries = new double[AHUNDRED];
         System.out.println("HI there!!");
     }
 
+    public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        this.tempseries = temperatureSeries;
+        tempseriesActualValue += temperatureSeries.length;
+        tempseriesLength = temperatureSeries.length;
+    }
 
     public double[] getTempseries() {
         return tempseries;
@@ -30,11 +34,6 @@ public class TemperatureSeriesAnalysis {
         tempseriesLength = newCapacity;
     }
 
-    public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        this.tempseries = temperatureSeries;
-        tempseriesActualValue += temperatureSeries.length;
-        tempseriesLength = temperatureSeries.length;
-    }
 
     public double average() {
         if (ArrayUtils.isEmpty(this.tempseries)) {
@@ -87,32 +86,34 @@ public class TemperatureSeriesAnalysis {
         if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
-        double closest_to_zero = Double.MAX_VALUE;
+        double closestToZero = Double.MAX_VALUE;
         for (double element : this.tempseries) {
-            if (Math.abs(closest_to_zero) == element) {
-                closest_to_zero = Math.abs(element);
+            if (Math.abs(closestToZero) == element) {
+                closestToZero = Math.abs(element);
             }
-            if (Math.abs(element) < Math.abs(closest_to_zero)) {
-                closest_to_zero = element;
+            if (Math.abs(element) < Math.abs(closestToZero)) {
+                closestToZero = element;
             }
         }
-        return closest_to_zero;
+        return closestToZero;
     }
 
     public double findTempClosestToValue(double tempValue) {
         if (ArrayUtils.isEmpty(this.tempseries)) {
             throw new IllegalArgumentException("Temperature series is empty");
         }
-        double closest_to_element = Double.MAX_VALUE;
+        double closestToElement = Double.MAX_VALUE;
         for (double element : this.tempseries) {
-            if ((Math.abs(tempValue - closest_to_element)) > Math.abs(tempValue - element)) {
-                closest_to_element = element;
+            if ((Math.abs(tempValue - closestToElement)) > Math.abs(
+                tempValue - element)) {
+                closestToElement = element;
             }
-            else if ((Math.abs(tempValue - closest_to_element)) == Math.abs(tempValue - element)) {
-                closest_to_element = Math.max(tempValue, closest_to_element);
+            else if ((Math.abs(tempValue - closestToElement)) ==
+             Math.abs(tempValue - element)) {
+                closestToElement = Math.max(tempValue, closestToElement);
             }
         }
-        return closest_to_element;
+        return closestToElement;
     }
 
     public double[] findTempsLessThen(double tempValue) {
@@ -124,9 +125,9 @@ public class TemperatureSeriesAnalysis {
                 current++;
             }
         }
-        double[] java_fignua = new double[current];
-        System.arraycopy(output, 0, java_fignua, 0, current);
-        return java_fignua;
+        double[] javaFignya = new double[current];
+        System.arraycopy(output, 0, javaFignya, 0, current);
+        return javaFignya;
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
@@ -138,9 +139,9 @@ public class TemperatureSeriesAnalysis {
                 current++;
             }
         }
-        double[] java_fignua = new double[current];
-        System.arraycopy(output, 0, java_fignua, 0, current);
-        return java_fignua;
+        double[] javaFignya = new double[current];
+        System.arraycopy(output, 0, javaFignya, 0, current);
+        return javaFignya;
     }
 
     public double[] findTempsInRange(double lowerBound, double upperBound) {
@@ -152,15 +153,15 @@ public class TemperatureSeriesAnalysis {
                 current++;
             } 
         }
-        double[] java_fignua = new double[current];
-        System.arraycopy(output, 0, java_fignua, 0, current);
-        return java_fignua;
+        double[] javaFignya = new double[current];
+        System.arraycopy(output, 0, javaFignya, 0, current);
+        return javaFignya;
     }
 
     public void reset() {
-        double[] java_fignua = new double[0];
+        double[] javaFignya = new double[0];
         this.tempseriesLength = 0;
-        this.tempseries = java_fignua ;
+        this.tempseries = javaFignya;
     }
 
     public double[] sortTemps() {
@@ -170,28 +171,29 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TempSummaryStatistics summaryStatistics() {
-        return new TempSummaryStatistics(this.average(), deviation(), this.min(), this.max());
+        return new TempSummaryStatistics(this.average(), deviation(),
+         this.min(), this.max());
     }
 
     public int addTemps(double... temps) {
-        int current_index = tempseriesActualValue;
+        int currentIndex = tempseriesActualValue;
 
         for (double el : temps) {
-            if (el < -273) {
+            if (el < TONEGATIVE) {
                 throw new InputMismatchException();
             }
         }
 
         for (double temp : temps) {
-            if (current_index == this.tempseriesLength) {
+            if (currentIndex == this.tempseriesLength) {
                 increaseCapacity(this.tempseriesLength * 2);
             }
-            this.tempseries[current_index] = temp;
-            current_index++;
+            this.tempseries[currentIndex] = temp;
+            currentIndex++;
             tempseriesActualValue++;
 
         }
 
-        return current_index;
+        return currentIndex;
     }
 }

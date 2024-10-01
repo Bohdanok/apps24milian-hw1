@@ -7,7 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter@Setter
 public class TemperatureSeriesAnalysis {
 
     private double[] tempseries;
@@ -20,8 +19,8 @@ public class TemperatureSeriesAnalysis {
     }
 
 
-    public double[] getTempseries() { 
-        return this.tempseries;
+    public double[] getTempseries() {
+        return tempseries;
     }
 
     private void increaseCapacity(int newCapacity) { 

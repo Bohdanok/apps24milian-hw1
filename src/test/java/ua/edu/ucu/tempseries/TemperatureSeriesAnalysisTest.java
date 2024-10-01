@@ -149,7 +149,7 @@ public class TemperatureSeriesAnalysisTest {
         
         seriesAnalysis.reset();
         
-        assertEquals(0, seriesAnalysis.GetTempseries().length);
+        assertEquals(0, seriesAnalysis.getTempseries().length);
     }
 
     @Test

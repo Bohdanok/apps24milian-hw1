@@ -20,13 +20,13 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        this.tempseries = temperatureSeries;
+        this.tempseries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
         tempseriesActualValue += temperatureSeries.length;
         tempseriesLength = temperatureSeries.length;
     }
 
     public double[] getTempseries() {
-        return tempseries;
+        return Arrays.copyOf(tempseries, tempseries.length);
     }
 
     private void increaseCapacity(int newCapacity) { 

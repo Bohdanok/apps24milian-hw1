@@ -6,15 +6,16 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class TemperatureSeriesAnalysis {
 
+    public static final int AHUNDRED = 100;
+    public static final int TONEGATIVE = -273;
+
     private double[] tempseries;
     private int tempseriesActualValue = 0;
     private int tempseriesLength = 0;
-    public static final int aHundred = 100;
-    public static final int toNegative = -273;
 
 
     public TemperatureSeriesAnalysis() {
-        this.tempseries = new double[aHundred];
+        this.tempseries = new double[AHUNDRED];
         System.out.println("HI there!!");
     }
 
@@ -180,7 +181,7 @@ public class TemperatureSeriesAnalysis {
         int currentIndex = tempseriesActualValue;
 
         for (double el : temps) {
-            if (el < toNegative) {
+            if (el < TONEGATIVE) {
                 throw new InputMismatchException();
             }
         }

@@ -9,11 +9,12 @@ public class TemperatureSeriesAnalysis {
     private double[] tempseries;
     private int tempseriesActualValue = 0;
     private int tempseriesLength = 0;
-    public final int AHUNDRED = 100;
-    public final int TONEGATIVE = -273;
+    public static final int aHundred = 100;
+    public static final int toNegative = -273;
+
 
     public TemperatureSeriesAnalysis() {
-        this.tempseries = new double[AHUNDRED];
+        this.tempseries = new double[aHundred];
         System.out.println("HI there!!");
     }
 
@@ -108,8 +109,8 @@ public class TemperatureSeriesAnalysis {
                 tempValue - element)) {
                 closestToElement = element;
             }
-            else if ((Math.abs(tempValue - closestToElement)) ==
-             Math.abs(tempValue - element)) {
+            else if ((Math.abs(tempValue - closestToElement)) == Math
+            .abs(tempValue - element)) {
                 closestToElement = Math.max(tempValue, closestToElement);
             }
         }
@@ -179,7 +180,7 @@ public class TemperatureSeriesAnalysis {
         int currentIndex = tempseriesActualValue;
 
         for (double el : temps) {
-            if (el < TONEGATIVE) {
+            if (el < toNegative) {
                 throw new InputMismatchException();
             }
         }

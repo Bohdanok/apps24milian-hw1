@@ -46,7 +46,7 @@ public class TemperatureSeriesAnalysis {
         for (double element : this.tempseries) {
             average += element;
         }
-        return average / this.tempseries.length;
+        return average / this.tempseriesActualValue;
     }
 
     public double deviation() {
@@ -163,6 +163,7 @@ public class TemperatureSeriesAnalysis {
 
     public void reset() {
         double[] javaFignya = new double[0];
+        this.tempseriesActualValue = 0;
         this.tempseriesLength = 0;
         this.tempseries = javaFignya;
     }
